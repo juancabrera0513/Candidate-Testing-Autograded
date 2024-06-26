@@ -23,7 +23,7 @@ let correctAnswers = ["Sally Ride", "true", "40", "Trajectory", "3"];
 function askForName() {
   // TODO 1.1b: Ask for candidate's name //
   const input = require("readline-sync");
-  candidateName = input.question("What is your name?");
+  candidateName = input.question("What is your name? \n");
 }
 
 let candidateAnswers = [];
@@ -45,21 +45,40 @@ function gradeQuiz(candidateAnswers) {
     let yourAnswer = candidateAnswers[i];
     let correctAnswer = correctAnswers[i];
 
+    console.log(`${i + 1}) ${questions[i]}`);
     console.log(`Your answer: ${yourAnswer}`);
     console.log(`Correct answer: ${correctAnswer}`);
 
-    if (candidateAnswers[i] === correctAnswers[i]) {
-      console.log(
-        `Congratulations ${candidateAnswers[i]} is the correct answer\n`
-      );
+    if (yourAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+      console.log(`Congratulations that's a correct.\n`);
     } else {
       console.log(
-        `We are sorry, ${candidateAnswers[i]} is an incorrect answer, the correct answer is ${correctAnswers[i]} \n`
+        `We are sorry, that is an incorrect, the correct answer is ${correctAnswers[i]}. \n`
       );
     }
   }
 
   let grade; //TODO 3.2 use this variable to calculate the candidates score.
+  let correctAnswered = 0;
+
+  for (i = 0; i < questions.length; i++) {
+    let yourAnswer = candidateAnswers[i];
+    let correctAnswer = correctAnswers[i];
+
+    if (yourAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+      correctAnswered += 1;
+    }
+  }
+
+  grade = (correctAnswered / questions.length) * 100;
+  console.log(
+    `Obtained Score: ${grade}%. (${correctAnswered} of ${questions.length} responses correct.)`
+  );
+  if (grade >= 80) {
+    console.log("Status: PASSED");
+  } else {
+    console.log("Status: FAILED");
+  }
 
   return grade;
 }
